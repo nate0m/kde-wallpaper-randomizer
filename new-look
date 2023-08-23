@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# START set kde wallpaper and colorscheme
+if [ $# -eq 0 ]; then
+  echo "choosing wall at random to specify wall do `new-look path/to/wall`"
+  location="/home/nate/Pictures/walls"
+  array=($(ls $location*)) # populate array with directory contents
+  ( IFS=$', '; echo "${array[*]}") # output array content for debugging
+
+  size=${#array[@]}
+  echo "There are "$size" files in walls"
+  index=$(($RANDOM % $size))
+  wallpaper=${array[$index]} # random selection
+  echo "selected wallpaper is: "$wallpaper
+
+  # change kde wallpaper and style
+  dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+  var Desktops = desktops();                                                                                                                      
+  for (i=0;i<Desktops.length;i++) {
+    d = Desktops[i];
+    d.wallpaperPlugin = "org.kde.image";
+    d.currentConfigGroup = Array("Wallpaper",
+                                  "org.kde.image",
+                                  "General");
+    d.writeConfig("Image", "file://'''$location'''/'${wallpaper}'");
+  }'
+  # generate pywal colorscheme
+  wal -i /home/nate/Pictures/walls/$wallpaper
+
+else
+  wallpaper="$1"
+
+  # change kde wallpaper and style
+  dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+  var Desktops = desktops();                                                                                                                      
+  for (i=0;i<Desktops.length;i++) {
+    d = Desktops[i];
+    d.wallpaperPlugin = "org.kde.image";
+    d.currentConfigGroup = Array("Wallpaper",
+                                  "org.kde.image",
+                                  "General");
+    d.writeConfig("Image", "file://'''$wallpaper'''");
+  }'
+  # generate pywal color scheme
+  wal -i $wallpaper
+
+fi
+#END
+
+# START change line konsole colorscheme file generatedb by pywal for transperency
+file_path="/home/nate/.local/share/konsole/colors-konsole.colorscheme"
+line_number=63
+new_line="Opacity=.95"
+
+# Read the file content into an array
+mapfile -t file_content < "$file_path"
+
+# Update the specific line in the array
+file_content[$line_number-1]=$new_line
+
+# Write the modified content back to the file
+printf "%s\n" "${file_content[@]}" > "$file_path"
+
+echo "Line $line_number updated in '$file_path'."
+# END 
+
+# set konsole colorscheme
+konsoleprofile "colors=colors-konsole"

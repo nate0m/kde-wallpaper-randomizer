@@ -1,3 +1,7 @@
+# DO
+
+- working on adding chrome theme generation
+
 # KDE wallpaper randomizer
 
 a small bash script that pick a wallpaper from a provided directory sets it on all monitors, sets kde style(shading colors, folder colors, etc.), and uses pywal to generate a konsole colorscheme and sets it.

@@ -46,7 +46,7 @@ change the `location` variable to your wallpapers directory's absolute path.
 you can also change the transperancy of konsole by editing the number on line 53. 1 = solid.
 
 ## Closing Thoughts
-This script will proably be broken by some change to pywal in the future because of the hacky way that I am chaning the opacity by editing the specific line in the file. If you don't care about tranperancy you can remove that entire block. Otherwise ¯\_(ツ)_/¯
+This script will proably be broken by some change to pywal in the future because of the hacky way that I am chaning the opacity by editing the specific line in the file. If you don't care about tranperancy you can remove that entire block. Otherwise `¯\_(ツ)_/¯`
 
 
 

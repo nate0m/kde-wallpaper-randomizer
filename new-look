@@ -66,3 +66,5 @@ echo "Line $line_number updated in '$file_path'."
 
 # set konsole colorscheme
 konsoleprofile "colors=colors-konsole"
+
+generate-b-theme
